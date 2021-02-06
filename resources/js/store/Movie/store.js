@@ -22,15 +22,18 @@ export default {
                 });
         },
         setMovie: async function ({commit}, id) {
-
+            await axios.get(`/api/movies/${id}`)
+                .then(async (response) => {
+                    await commit('SET_MOVIE_STATE', response.data);
+                });
         }
     },
     mutations: {
         SET_TOP_MOVIES_STATE(state, payload) {
-            state.products = payload;
+            state.topMovies = payload;
         },
         SET_MOVIE_STATE(state, payload) {
-            state.productsPageCount = payload;
+            state.movie = payload;
         }
     }
 };

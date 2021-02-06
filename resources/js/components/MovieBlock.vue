@@ -1,17 +1,18 @@
 <template>
-    <div class="movie-block">
+    <router-link :to="`/${id}`" class="movie-block">
         <div class="image">
-            <img :data-src="image" src="" :alt="title">
+            <img :src="image" :alt="title">
         </div>
         <p class="title">{{title}}</p>
         <p class="year">{{year}}</p>
         <p class="rating">{{rating}}</p>
-    </div>
+    </router-link>
 </template>
 
 <script>
 export default {
     props:{
+        id:Number,
         image: String,
         title: String,
         year: Number,

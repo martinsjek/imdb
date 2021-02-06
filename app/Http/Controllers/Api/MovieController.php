@@ -4,21 +4,18 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp;
+use App\Models\Movie;
 
 
 class MovieController extends Controller
 {
     public function getTopMovies()
     {
-        $client = new GuzzleHttp\Client(['base_uri' => env('MY_API_FILMS_DOMAIN')]);
+        return Movie::whereNotNull('ranking')->orderBy('ranking', 'asc')->get()->toArray();
+    }
 
-        $response = $client->get('/imdb/top',[
-            'query' => [
-                'token' =>  env('MY_API_FILMS_TOKEN')
-            ]
-        ]);
-
-        return $response->getBody();
+    public function getMovie($id)
+    {
+        return Movie::where(['id' => $id])->first()->toArray();
     }
 }

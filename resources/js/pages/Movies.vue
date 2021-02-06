@@ -3,16 +3,17 @@
         <div class="movies-wrapper">
             <MovieBlock v-for="(item, index) in topMovies"
                         :key="index"
+                        :id="item.id"
                         :title="item.title"
                         :rating="item.rating"
                         :year="item.year"
-                        :image="item.image"></MovieBlock>
+                        :image="item.poster"></MovieBlock>
         </div>
     </div>
 </template>
 
 <script>
-import MovieBlock from "./Movie";
+import MovieBlock from "../components/MovieBlock";
 import {mapActions, mapState} from "vuex";
 export default {
     mounted(){

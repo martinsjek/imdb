@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('movies')->group(function () {
     Route::get('/top', 'App\Http\Controllers\Api\MovieController@getTopMovies');
+    Route::get('/{id}', 'App\Http\Controllers\Api\MovieController@getMovie');
 });
