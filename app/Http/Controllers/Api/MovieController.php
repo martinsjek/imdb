@@ -13,8 +13,10 @@ class MovieController extends Controller
     {
         $client = new GuzzleHttp\Client(['base_uri' => env('MY_API_FILMS_DOMAIN')]);
 
-        $response = $client->get('/top',[
-            'token' =>  env('MY_API_FILMS_TOKEN')
+        $response = $client->get('/imdb/top',[
+            'query' => [
+                'token' =>  env('MY_API_FILMS_TOKEN')
+            ]
         ]);
 
         return $response->getBody();
