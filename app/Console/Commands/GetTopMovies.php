@@ -67,6 +67,7 @@ class GetTopMovies extends Command
 
 
         if ($movies) {
+            Movie::whereNotNull('ranking')->update(['ranking' => null]);
             Movie::upsert($movies, 'imdb_id');
         }
     }

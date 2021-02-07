@@ -18,15 +18,6 @@ class Movie extends Model
         'ranking'
     ];
 
-    public static $rules = [
-        'title' => 'required|string|max:255',
-        'imdb_id' => 'required|string|max:255',
-        'poster' => 'required|string|max:255',
-        'year' => 'required|integer',
-        'rating' => 'required|numeric',
-        'ranking' => 'integer'
-    ];
-
     protected $visible = [
         'id',
         'title',
