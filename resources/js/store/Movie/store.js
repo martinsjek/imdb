@@ -6,7 +6,8 @@ export default {
         topMovies: null,
         movie: null,
         page: null,
-        pageCount: null
+        pageCount: null,
+        comments: null
     },
     getters: {
         getTopMovies(state) {
@@ -32,7 +33,8 @@ export default {
         setMovie: async function ({commit}, id) {
             await axios.get(`/api/movies/${id}`)
                 .then(async (response) => {
-                    await commit('SET_MOVIE_STATE', response.data);
+                    await commit('SET_MOVIE_STATE', response.data.movie);
+                    await commit('SET_COMMENTS_STATE', response.data.comments);
                 });
         }
     },
@@ -48,6 +50,9 @@ export default {
         },
         SET_PAGE_COUNT_STATE(state, payload) {
             state.pageCount = payload;
+        },
+        SET_COMMENTS_STATE(state, payload) {
+            state.comments = payload;
         }
     }
 };

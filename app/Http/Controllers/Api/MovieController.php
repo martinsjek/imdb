@@ -18,8 +18,13 @@ class MovieController extends Controller
         return Movie::whereNotNull('ranking')->orderBy('ranking', 'asc')->paginate(20, ['*'], 'page', $page)->toArray();
     }
 
-    public function getMovie($id)
+    public function getMovie($id): array
     {
-        return Movie::where(['id' => $id])->first()->toArray();
+        $movie = Movie::where(['id' => $id])->first();
+
+        return [
+            'movie' => $movie->toArray(),
+            'comments' => $movie->comments->toArray()
+        ];
     }
 }
