@@ -1,6 +1,6 @@
 <template>
     <div class="movies" v-if="topMovies">
-        <h2>IMDB TO MOVIES</h2>
+        <h2>IMDB TOP MOVIES</h2>
         <div class="container">
             <div class="movies-wrapper">
                 <MovieBlock v-for="(item, index) in topMovies"
