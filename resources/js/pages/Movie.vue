@@ -1,11 +1,16 @@
 <template>
     <div class="movie">
-        <div class="image">
-            <img :src="movie.poster" :alt="movie.title">
+        <h2>{{movie.title}}</h2>
+        <div class="container">
+            <div class="image">
+                <img :src="movie.poster" :alt="movie.title">
+            </div>
+            <div class="data">
+                <p class="ranking">Ranking: {{movie.ranking}}</p>
+                <p class="year">Year: {{movie.year}}</p>
+                <p class="rating">Rating: {{movie.rating}}</p>
+            </div>
         </div>
-        <p class="title">{{movie.title}}</p>
-        <p class="year">{{movie.year}}</p>
-        <p class="rating">{{movie.rating}}</p>
     </div>
 </template>
 
@@ -24,3 +29,19 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .movie{
+        h2{
+            text-align: center;
+        }
+        .container{
+            display: flex;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+        .data{
+            margin-left: 30px;
+        }
+    }
+</style>

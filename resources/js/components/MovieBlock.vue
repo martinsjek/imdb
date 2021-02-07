@@ -4,8 +4,8 @@
             <img :src="image" :alt="title">
         </div>
         <p class="title">{{title}}</p>
-        <p class="year">{{year}}</p>
-        <p class="rating">{{rating}}</p>
+        <p class="year">Year: {{year}}</p>
+        <p class="rating">Rating: {{rating}}</p>
     </router-link>
 </template>
 
@@ -20,3 +20,16 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+    .movie-block{
+        box-shadow: 0 0 4px 0;
+        border-radius: 4px;
+        padding: 10px;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+    }
+</style>

@@ -4,7 +4,9 @@ export default {
     namespaced:true,
     state: {
         topMovies: null,
-        movie: null
+        movie: null,
+        page: null,
+        pageCount: null
     },
     getters: {
         getTopMovies(state) {
@@ -15,10 +17,16 @@ export default {
         }
     },
     actions: {
-        setTopMovies: async function ({commit}) {
-            await axios.get(`/api/movies/top`)
+        setTopMovies: async function ({commit}, page) {
+            if(page){
+                page = `?page=${page}`;
+            }
+
+            await axios.get(`/api/movies/top${page}`)
                 .then(async (response) => {
-                    await commit('SET_TOP_MOVIES_STATE', response.data);
+                    await commit('SET_TOP_MOVIES_STATE', response.data.data);
+                    await commit('SET_PAGE_STATE', response.data.current_page);
+                    await commit('SET_PAGE_COUNT_STATE', response.data.last_page);
                 });
         },
         setMovie: async function ({commit}, id) {
@@ -34,6 +42,12 @@ export default {
         },
         SET_MOVIE_STATE(state, payload) {
             state.movie = payload;
+        },
+        SET_PAGE_STATE(state, payload) {
+            state.page = payload;
+        },
+        SET_PAGE_COUNT_STATE(state, payload) {
+            state.pageCount = payload;
         }
     }
 };

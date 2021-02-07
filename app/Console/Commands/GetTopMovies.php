@@ -44,7 +44,8 @@ class GetTopMovies extends Command
 
         $response = $client->get('/imdb/top', [
             'query' => [
-                'token' => env('MY_API_FILMS_TOKEN')
+                'token' => env('MY_API_FILMS_TOKEN'),
+                'data' => 1
             ]
         ]);
 
