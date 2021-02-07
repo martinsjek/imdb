@@ -5,11 +5,12 @@
             <div class="movies-wrapper">
                 <MovieBlock v-for="(item, index) in topMovies"
                             :key="index"
-                            :id="item.id"
-                            :title="item.title"
-                            :rating="item.rating"
-                            :year="item.year"
-                            :image="item.poster"></MovieBlock>
+                            :id="item.movie.id"
+                            :title="item.movie.title"
+                            :rating="item.movie.rating"
+                            :year="item.movie.year"
+                            :comments="item.comments"
+                            :image="item.movie.poster"></MovieBlock>
             </div>
             <div class="pagination" v-if="pageCount">
                 <div @click="changePage(page - 1)" class="item prev" v-if="page > 1">

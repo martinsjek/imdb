@@ -7,18 +7,30 @@ use App\Http\Controllers\Controller;
 use App\Models\Comment;
 use App\Models\Movie;
 use App\Rules\CommentTime;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
 class MovieController extends Controller
 {
-    public function getTopMovies(Request $request)
+    public function getTopMovies(Request $request): array
     {
         $requestData = $request->all();
         $page = $requestData['page'] ?? 1;
 
-        return Movie::whereNotNull('ranking')->orderBy('ranking', 'asc')->paginate(20, ['*'], 'page', $page)->toArray();
+        $moviesData = Movie::whereNotNull('ranking')->orderBy('ranking', 'asc')->paginate(20, ['*'], 'page', $page);
+        $movies = [];
+        foreach ($moviesData as $movie){
+            $movies[] = [
+                'movie' => $movie->toArray(),
+                'comments' => $movie->comments->count()
+            ];
+        }
+
+        return [
+            'movies' => $movies,
+            'currentPage' => $moviesData->currentPage(),
+            'lastPage' => $moviesData->lastPage()
+        ];
     }
 
     public function getMovie(Movie $movie): array
@@ -33,7 +45,7 @@ class MovieController extends Controller
     {
         $rules = Comment::$rules;
         $newRules = [
-            'comment' => ['required','string', new CommentTime]
+            'comment' => ['required','string', new CommentTime($movie->id)]
         ];
         $rules = array_merge($rules, $newRules);
         $request->validate($rules);

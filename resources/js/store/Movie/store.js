@@ -7,7 +7,8 @@ export default {
         movie: null,
         page: null,
         pageCount: null,
-        comments: null
+        comments: null,
+        commentsErrors: null
     },
     getters: {
         getTopMovies(state) {
@@ -25,9 +26,9 @@ export default {
 
             await axios.get(`/api/movies/top${page}`)
                 .then(async (response) => {
-                    await commit('SET_TOP_MOVIES_STATE', response.data.data);
-                    await commit('SET_PAGE_STATE', response.data.current_page);
-                    await commit('SET_PAGE_COUNT_STATE', response.data.last_page);
+                    await commit('SET_TOP_MOVIES_STATE', response.data.movies);
+                    await commit('SET_PAGE_STATE', response.data.currentPage);
+                    await commit('SET_PAGE_COUNT_STATE', response.data.lastPage);
                 });
         },
         setMovie: async function ({commit}, id) {
@@ -41,6 +42,10 @@ export default {
             await axios.post(`/api/movies/${id}/post-comment`, data)
                 .then(async (response) => {
                     await commit('SET_COMMENTS_STATE', response.data.comments);
+                    await commit('SET_COMMENTS_ERRORS_STATE', null);
+                })
+                .catch(async (error) => {
+                    await commit('SET_COMMENTS_ERRORS_STATE', error.response.data.errors);
                 });
         },
     },
@@ -59,6 +64,9 @@ export default {
         },
         SET_COMMENTS_STATE(state, payload) {
             state.comments = payload;
+        },
+        SET_COMMENTS_ERRORS_STATE(state, payload) {
+            state.commentsErrors = payload;
         }
     }
 };

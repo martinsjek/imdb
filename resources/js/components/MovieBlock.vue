@@ -6,6 +6,7 @@
         <p class="title">{{title}}</p>
         <p class="year">Year: {{year}}</p>
         <p class="rating">Rating: {{rating}}</p>
+        <p class="rating">Comments: {{comments}}</p>
     </router-link>
 </template>
 
@@ -16,7 +17,8 @@ export default {
         image: String,
         title: String,
         year: Number,
-        rating: Number
+        rating: Number,
+        comments: Number
     }
 }
 </script>

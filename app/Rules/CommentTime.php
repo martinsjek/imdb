@@ -8,14 +8,15 @@ use Illuminate\Contracts\Validation\Rule;
 
 class CommentTime implements Rule
 {
+    public int $movie;
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($movie)
     {
-        //
+        $this->movie = $movie;
     }
 
     /**
@@ -32,6 +33,7 @@ class CommentTime implements Rule
 
         $lastInsertedCommentByIp = Comment::select('id')
             ->where(['ip' => $ip])
+            ->where(['movie_id' => $this->movie])
             ->where('updated_at', '>', $commentTimeInterval)
             ->orderBy('updated_at', 'desc')
             ->first();
