@@ -24,7 +24,7 @@ class CreateCommentsTable extends Migration
             $table->index('ip');
             $table->index('movie_id');
 
-            $table->foreign('movie_id')->references('id')->on('movies');
+            $table->foreign('movie_id')->references('id')->on('movies')->onDelete('CASCADE');
         });
     }
 

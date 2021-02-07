@@ -53,27 +53,21 @@ class GetTopMovies extends Command
         $movieData = $movieData ? json_decode($movieData, true, 512, JSON_THROW_ON_ERROR) : null;
         $movieData = $movieData['data']['movies'] ?? null;
 
+        $movies = [];
+        foreach($movieData as $movie){
+            $movies[] = [
+                'title' => $movie['title'],
+                'poster' => $movie['urlPoster'],
+                'year' => $movie['year'],
+                'rating' => (float)$movie['rating'],
+                'ranking' => $movie['ranking'],
+                'imdb_id' => $movie['idIMDB']
+            ];
+        }
 
-        if ($movieData) {
-            //remove existing ranking
-            Movie::whereNotNull('ranking')
-                ->update([
-                    'ranking' => null
-                ]);
 
-            //add top ten movies
-            foreach ($movieData as $movie) {
-                Movie::updateOrCreate([
-                    'imdb_id' => $movie['idIMDB']
-                ],
-                    [
-                        'title' => $movie['title'],
-                        'poster' => $movie['urlPoster'],
-                        'year' => $movie['year'],
-                        'rating' => $movie['rating'],
-                        'ranking' => $movie['ranking']
-                    ]);
-            }
+        if ($movies) {
+            Movie::upsert($movies, 'imdb_id');
         }
     }
 }

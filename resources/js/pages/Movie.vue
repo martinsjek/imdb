@@ -14,7 +14,7 @@
             </div>
             <div class="comments">
                 <h3>Comments</h3>
-                <form action="">
+                <form action="" @submit.prevent="submitComment">
                     <div class="form-item">
                         <label for="name">Name</label>
                         <input id="name" type="text" v-model="name">
@@ -26,7 +26,7 @@
                     <button type="submit">Submit</button>
                 </form>
 
-                <div class="all-comments" v-if="comments">
+                <div class="all-comments" v-if="comments.length">
                     <h3>All comments</h3>
                     <div class="comment" v-for="(item, index) in comments">
                         <p class="name">{{item.name}}</p>
@@ -52,7 +52,14 @@ export default {
         this.setMovie(this.$route.params.id);
     },
     methods: {
-        ...mapActions('movie', ['setMovie'])
+        ...mapActions('movie', ['setMovie', 'postComment']),
+
+        submitComment(){
+            this.postComment([this.$route.params.id, {
+                name: this.name,
+                comment: this.comment
+            }])
+        }
     },
     computed:{
         ...mapState('movie', ['movie', 'comments'])
@@ -66,7 +73,7 @@ export default {
         h2{
             text-align: center;
         }
-        .container{
+        .movie-data{
             display: flex;
             align-items: flex-start;
             flex-wrap: wrap;
@@ -99,6 +106,7 @@ export default {
             border-radius: 4px;
             border: 1px solid #666;
             padding:20px;
+            margin: 20px 0;
             .name{
                 font-weight: bold;
             }

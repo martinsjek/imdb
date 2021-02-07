@@ -44,7 +44,7 @@ export default {
         }
     },
     mounted() {
-        this.setTopMovies(this.$route.query.page ?? null);
+        this.setTopMovies(this.$route.query.page ?? '');
     },
     components: {
         MovieBlock

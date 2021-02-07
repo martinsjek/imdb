@@ -18,7 +18,7 @@ export default {
         }
     },
     actions: {
-        setTopMovies: async function ({commit}, page) {
+        setTopMovies: async function ({commit}, page = '') {
             if(page){
                 page = `?page=${page}`;
             }
@@ -36,7 +36,13 @@ export default {
                     await commit('SET_MOVIE_STATE', response.data.movie);
                     await commit('SET_COMMENTS_STATE', response.data.comments);
                 });
-        }
+        },
+        postComment: async function ({commit}, [id, data]) {
+            await axios.post(`/api/movies/${id}/post-comment`, data)
+                .then(async (response) => {
+                    await commit('SET_COMMENTS_STATE', response.data.comments);
+                });
+        },
     },
     mutations: {
         SET_TOP_MOVIES_STATE(state, payload) {

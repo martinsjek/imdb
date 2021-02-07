@@ -27,8 +27,17 @@ class Movie extends Model
         'ranking' => 'integer'
     ];
 
+    protected $visible = [
+        'id',
+        'title',
+        'poster',
+        'year',
+        'rating',
+        'ranking'
+    ];
+
     public function comments(): HasMany
     {
-        return $this->hasMany(Comment::class)->select(['name', 'comment']);
+        return $this->hasMany(Comment::class)->orderBy('updated_at', 'desc');
     }
 }
