@@ -36,6 +36,7 @@ export default {
                 .then(async (response) => {
                     await commit('SET_MOVIE_STATE', response.data.movie);
                     await commit('SET_COMMENTS_STATE', response.data.comments);
+                    await commit('SET_COMMENTS_ERRORS_STATE', null);
                 });
         },
         postComment: async function ({commit}, [id, data]) {
